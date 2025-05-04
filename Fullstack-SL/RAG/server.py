@@ -1,14 +1,18 @@
-from langchain.vectorstores import Chroma
-from langchain.chat_models import ChatOllama
-from langchain.embeddings import FastEmbedEmbeddings
-from langchain.schema.output_parser import StrOutputParser
-from langchain.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema.runnable import RunnablePassthrough
-from langchain.prompts import PromptTemplate
-from langchain.vectorstores.utils import filter_complex_metadata
+from langchain_community.vectorstores import Chroma
+from langchain_ollama import ChatOllama
+from langchain_community.embeddings import FastEmbedEmbeddings
+from langchain_core.output_parsers import StrOutputParser
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.prompts import PromptTemplate
+from langchain_community.vectorstores.utils import filter_complex_metadata
 
+#Optional deps
 import pdb
+import fastembed
+import chromadb
+import pypdf
 
 class ChatPDF:
     vector_store = None
@@ -16,7 +20,7 @@ class ChatPDF:
     chain = None
 
     def __init__(self):
-        self.model = ChatOllama(model="llama2:70b")
+        self.model = ChatOllama(model="llama3.2:latest")
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
         self.prompt = PromptTemplate.from_template(
             """

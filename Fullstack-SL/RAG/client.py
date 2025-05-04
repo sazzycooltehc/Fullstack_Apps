@@ -1,5 +1,7 @@
 import os
 import tempfile
+import traceback
+
 import streamlit as st
 from streamlit_chat import message
 from server import ChatPDF
@@ -35,12 +37,13 @@ def read_and_save_file():
                 tf.write(file.getbuffer())
                 file_path = tf.name
 
-            with st.session_state["ingestion_spinner"], st.spinner(f"Ingesting {file.name}"):
+            with st.spinner(f"Ingesting {file.name}"):
                 st.session_state["assistant"].ingest(file_path)
             os.remove(file_path)
-        except:
-            print("skipping", file.name)
 
+        except Exception as e:
+            print("Skipping", file.name)
+            traceback.print_exc()
 
 def page():
     if len(st.session_state) == 0:
