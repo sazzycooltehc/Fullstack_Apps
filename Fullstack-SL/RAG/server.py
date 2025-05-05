@@ -2,11 +2,12 @@ from langchain_community.vectorstores import Chroma
 from langchain_ollama import ChatOllama
 from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_core.output_parsers import StrOutputParser
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.prompts import PromptTemplate
 from langchain_community.vectorstores.utils import filter_complex_metadata
+from filefinder import file_name_finder as ff
 
 #Optional deps
 import pdb
@@ -32,7 +33,13 @@ class ChatPDF:
         )
 
     def ingest(self, pdf_file_path: str):
-        loader = lambda x: PyPDFLoader(file_path=x).load()
+        # Detect file type
+        if ff().lower().endswith(".pdf"):
+            loader = lambda x: PyPDFLoader(file_path=x).load()
+        elif ff().lower().endswith(".txt"):
+            loader = lambda x: TextLoader(file_path=x).load()
+        else:
+            raise ValueError("Unsupported file format. Please provide a PDF or TXT file.")
         docs = loader(pdf_file_path)
         chunks = self.text_splitter.split_documents(docs)
         chunks = filter_complex_metadata(chunks)
@@ -53,7 +60,7 @@ class ChatPDF:
 
     def ask(self, query: str):
         if not self.chain:
-            return "Please, add a PDF document first."
+            return "Please, add a document first."
 
         return self.chain.invoke(query)
 

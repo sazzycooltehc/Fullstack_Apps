@@ -38,6 +38,7 @@ def read_and_save_file():
                 file_path = tf.name
 
             with st.spinner(f"Ingesting {file.name}"):
+                print(f"Processing file: {file.name} , {file_path}")
                 st.session_state["assistant"].ingest(file_path)
             os.remove(file_path)
 
@@ -55,7 +56,7 @@ def page():
     st.subheader("Upload a document")
     st.file_uploader(
         "Upload document",
-        type=["pdf"],
+        type=["pdf","txt"],
         key="file_uploader",
         on_change=read_and_save_file,
         label_visibility="collapsed",
@@ -66,7 +67,3 @@ def page():
 
     display_messages()
     st.text_input("Message", key="user_input", on_change=process_input)
-
-
-if __name__ == "__main__":
-    page()
