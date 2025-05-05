@@ -6,8 +6,8 @@ import streamlit as st
 from streamlit_chat import message
 from server import ChatPDF
 
-st.set_page_config(page_title="ChatPDF")
-
+st.set_page_config(page_title="RAG")
+st.title("RAG with Langchain and Streamlit")
 
 def display_messages():
     st.subheader("Chat")
@@ -50,7 +50,7 @@ def page():
         st.session_state["messages"] = []
         st.session_state["assistant"] = ChatPDF()
 
-    st.header("ChatPDF")
+    # st.header("ChatPDF")
 
     st.subheader("Upload a document")
     st.file_uploader(

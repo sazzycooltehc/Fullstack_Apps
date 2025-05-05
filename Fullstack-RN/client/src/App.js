@@ -32,7 +32,7 @@ const App = () => {
         >
         </a>
       </header>
-      <h1>MERN Stack Todo App</h1>
+      <h1>MERN Stack App</h1>
       <TodoForm onAdd={addTodo} />
       <ul>
         {todos.map(todo => (
