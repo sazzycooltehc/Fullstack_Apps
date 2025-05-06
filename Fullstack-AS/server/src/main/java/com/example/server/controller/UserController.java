@@ -29,4 +29,15 @@ public class UserController {
     void addUser(@RequestBody User user) {
         userRepository.save(user);
     }
+
+    @PostMapping("/delete")
+    void deleteUser(@RequestBody User user) {
+        userRepository.delete(user);
+        List<User> users = userRepository.findAll();
+        for (int i = 0; i < users.size(); i++) {
+            user = users.get(i);
+            user.setId((long) i + 1);
+            userRepository.save(user);
+        }
+    }
 }

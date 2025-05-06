@@ -8,9 +8,11 @@ import { User } from '../model/user';
 })
 export class UserService {
   private usersUrl: string;
+  private deleteurl: string;
 
   constructor(private http: HttpClient) {
     this.usersUrl = 'http://localhost:8080/users';
+    this.deleteurl = 'http://localhost:8080/delete';
   }
 
   public findAll(): Observable<User[]> {
@@ -19,5 +21,9 @@ export class UserService {
 
   public save(user: User) {
     return this.http.post<User>(this.usersUrl, user);
+  }
+
+  public delete(user: User){
+    return this.http.post<User>(this.deleteurl, user);
   }
 }
