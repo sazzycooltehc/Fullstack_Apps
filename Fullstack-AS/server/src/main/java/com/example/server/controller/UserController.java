@@ -2,6 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.entity.User;
 import com.example.server.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +13,8 @@ public class UserController {
 
     // standard constructors
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
