@@ -23,7 +23,9 @@ export class UserService {
     return this.http.post<User>(this.usersUrl, user);
   }
 
-  public delete(user: User){
-    return this.http.post<User>(this.deleteurl, user);
-  }
+  public delete(user: User) {
+    console.log('Service: Deleting user:', user);  // Log the full user object
+    return this.http.post<User>(this.usersUrl , user);  // Sending full user object
+  }  
+  
 }

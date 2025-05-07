@@ -3,6 +3,7 @@ package com.example.server.controller;
 import com.example.server.entity.User;
 import com.example.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,14 +31,11 @@ public class UserController {
         userRepository.save(user);
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/users")
     void deleteUser(@RequestBody User user) {
-        userRepository.delete(user);
-        List<User> users = userRepository.findAll();
-        for (int i = 0; i < users.size(); i++) {
-            user = users.get(i);
-            user.setId((long) i + 1);
-            userRepository.save(user);
+        if (userRepository.existsById(user.getId())) {
+            userRepository.delete(user);
         }
     }
+
 }

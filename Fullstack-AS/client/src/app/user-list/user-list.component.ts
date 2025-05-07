@@ -21,20 +21,30 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  deleteUser(index: number) {
-    const user = this.users[index-1];
+  deleteUser(user: User): void {
+    console.log('Deleting user:', user);  // Log the full user object
+  
     if (user) {
       this.userService.delete(user).subscribe(
-        result => {
-          this.users.splice(index, 1);
-          this.gotoUserList();
+        () => {
+          // Remove the user based on the full JSON object match
+          this.users = this.users.filter((u: User) => {
+            // Match users by their full object, checking properties like id, name, and email
+            return u.id !== user.id || u.name !== user.name || u.email !== user.email;
+          });
+          console.log('User deleted successfully');
         },
-        error => console.error('Error deleting user:', error)
+        error => {
+          console.error('Error deleting user:', error);
+        }
       );
     } else {
-      console.error('User not found at index:', index);
+      console.error('Invalid user object:', user);
     }
   }
+  
+  
+  
 
   gotoUserList() {
     location.reload();
