@@ -35,10 +35,10 @@ public class ServerApplication {
     CommandLineRunner init(UserService userService) {
         // Create default users
         return args -> {
-            Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
-                User user = new User(name, name.toLowerCase() + "@domain.com");
-                userRepository.save(user);
-            });
+//            Stream.of("John", "Julie", "Jennifer", "Helen", "Rachel").forEach(name -> {
+//                User user = new User(name, name.toLowerCase() + "@domain.com");
+//                userRepository.save(user);
+//            });
 //            userRepository.findAll().forEach(System.out::println);
 
             // Get manual input from user

@@ -31,11 +31,16 @@ public class UserController {
         userRepository.save(user);
     }
 
-    @DeleteMapping("/users")
+    @DeleteMapping("/delete")
     void deleteUser(@RequestBody User user) {
-        if (userRepository.existsById(user.getId())) {
-            userRepository.delete(user);
+        Long userId = user.getId();
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+            System.out.println("Deleted user with ID: " + userId);
+        } else {
+            System.out.println("User with ID " + userId + " not found.");
         }
     }
+
 
 }
