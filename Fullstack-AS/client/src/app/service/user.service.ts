@@ -25,7 +25,7 @@ export class UserService {
 
   public delete(user: User) {
     console.log('Service: Deleting user:', user);  // Log the full user object
-    return this.http.post<User>(this.usersUrl , user);  // Sending full user object
+    return this.http.request('delete', this.deleteurl, { body: user });  // Sending full user object
   }  
   
 }
