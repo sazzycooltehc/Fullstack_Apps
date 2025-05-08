@@ -28,19 +28,19 @@ public class UserController {
 
     @PostMapping("/users")
     void addUser(@RequestBody User user) {
-        userRepository.save(user);
+        user = userRepository.save(user); // Assign the persisted object back to user
+        System.out.println("Saved ID: " + user.getId());
     }
-
-    @DeleteMapping("/delete")
-    void deleteUser(@RequestBody User user) {
-        Long userId = user.getId();
-        if (userRepository.existsById(userId)) {
-            userRepository.deleteById(userId);
-            System.out.println("Deleted user with ID: " + userId);
+    @RequestMapping("/delete/{id}")
+    void deleteUser(@PathVariable Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            System.out.println("Deleted user with ID: " + id);
         } else {
-            System.out.println("User with ID " + userId + " not found.");
+            System.out.println("User with ID " + id + " not found.");
         }
     }
+
 
 
 }

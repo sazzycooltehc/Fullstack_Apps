@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+   usersUrl: 'http://localhost:8080/users',
+   deleteurl: 'http://localhost:8080/delete'
 };
 
 /*
