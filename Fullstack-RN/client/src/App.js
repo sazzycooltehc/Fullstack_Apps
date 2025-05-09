@@ -17,6 +17,8 @@ const App = () => {
     setTodos([...todos, newTodo]);
   };
 
+  const deleteTodo = (id) => {};
+
   return (
     <div className='App'>
         <header className="App-header">
