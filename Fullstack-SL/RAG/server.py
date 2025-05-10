@@ -21,11 +21,11 @@ class ChatPDF:
     chain = None
 
     def __init__(self):
-        self.model = ChatOllama(model="mistral:latest")
-        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
+        self.model = ChatOllama(model="llama3.2:latest")
+        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=50)
         self.prompt = PromptTemplate.from_template(
             """
-            <s> [INST] You are an assistant for generating summaries of academic literature. Use the following documents to build summaries. Try to make connections between the papers and their citations. [/INST] </s> 
+            <s> [INST] You are an assistant for generating summaries and points of academic literature. Use the following documents to build summaries. Try to make connections between the papers and their citations. [/INST] </s> 
             [INST] Question: {question} 
             Context: {context} 
             Answer: [/INST]
@@ -49,7 +49,7 @@ class ChatPDF:
             search_type="similarity_score_threshold",
             search_kwargs={
                 "k": 3,
-                "score_threshold": 0.5,
+                "score_threshold": 0.2,
             },
         )
 

@@ -1,6 +1,7 @@
 import os
 import tempfile
 import traceback
+import time
 
 import streamlit as st
 from streamlit_chat import message
@@ -8,6 +9,14 @@ from server import ChatPDF
 
 st.set_page_config(page_title="RAG")
 st.title("RAG with Langchain and Streamlit")
+
+with st.sidebar:
+    with st.echo():
+        st.write("This code will be printed to the sidebar.")
+
+    with st.spinner("Loading..."):
+        time.sleep(5)
+    st.success("Done!")
 
 def display_messages():
     st.subheader("Chat")
