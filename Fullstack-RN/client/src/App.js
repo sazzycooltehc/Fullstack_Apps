@@ -16,8 +16,15 @@ const App = () => {
   const addTodo = (newTodo) => {
     setTodos([...todos, newTodo]);
   };
-
-  const deleteTodo = (id) => {};
+  
+  const deleteTodo = async (id) => {
+    try {
+      await axios.delete(`http://localhost:9000/todos/${id}`, );
+      setTodos(todos.filter(todo => todo._id !== id));
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+    }
+  };
 
   return (
     <div className='App'>
@@ -38,7 +45,9 @@ const App = () => {
       <TodoForm onAdd={addTodo} />
       <ul>
         {todos.map(todo => (
-          <li key={todo._id}>{todo.task}</li>
+          <li key={todo._id}>{todo.task}
+          <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>
