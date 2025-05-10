@@ -167,4 +167,4 @@ cython_debug/
 #.idea/
 
 #Others 
- .doc_sample/RNN.pdf
+ doc_sample\RNN.pdf
