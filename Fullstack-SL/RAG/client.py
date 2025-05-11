@@ -17,6 +17,8 @@ with st.sidebar:
     with st.spinner("Loading..."):
         time.sleep(5)
     st.success("Done!")
+    st.write("Doc Uplaoder")
+    st.write("Interactive Bot")
 
 def display_messages():
     st.subheader("Chat")
