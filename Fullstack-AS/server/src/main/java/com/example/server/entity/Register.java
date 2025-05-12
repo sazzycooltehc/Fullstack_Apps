@@ -12,7 +12,7 @@ public class Register {
     private long id;
     private String name;
     private String email;
-    private Long address;
+    private String address;
     private String createdON;
 
     public Register() {
@@ -22,7 +22,7 @@ public class Register {
         this.createdON = "";
     }
 
-    public Register(String name, String email, Long address, String createdON) {
+    public Register(String name, String email, String address, String createdON) {
         this.name = name;
         this.email = email;
         this.address = address;
@@ -41,7 +41,7 @@ public class Register {
         return email;
     }
 
-    public long getRegisterAddress() {
+    public String getRegisterAddress() {
         return address;
     }
 
@@ -56,6 +56,14 @@ public class Register {
 
     public void setId(long l) {
         this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.name = firstName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

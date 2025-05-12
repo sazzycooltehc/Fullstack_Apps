@@ -1,26 +1,27 @@
 package com.example.server.service;
 
+import com.example.server.entity.Register;
 import com.example.server.repository.RegisterRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegisterServiceImpl RegisterService {
+public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     private RegisterRepository registerRepository;
 
     @Override
-    public register findById(Long id) {
-        return userRepository.findById(id).map(UserDto::new).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    public Register findById(Long id) {
+        return registerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     @Override
-    public void updateUser(Long id, UserDto userDto) {
-        User existingUser = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
-        existingUser.setFirstName(userDto.getFirstName());
-        existingUser.setLastName(userDto.getLastName());
-        existingUser.setEmail(userDto.getEmail());
-        userRepository.save(existingUser);
+    public void updateUser(Long id, Register updatedUser) {
+        Register existingUser = registerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        existingUser.setFirstName(updatedUser.getRegisterName());
+        existingUser.setEmail(updatedUser.getRegisterEmail());
+        registerRepository.save(existingUser);
     }
 }
