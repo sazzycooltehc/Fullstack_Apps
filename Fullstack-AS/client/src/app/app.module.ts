@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { RegisterComponent } from './register/register.component';
+import { UserRadioComponent } from './user-radio/user-radio.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +19,7 @@ import { RegisterComponent } from './register/register.component';
     HeaderComponent,
     FooterComponent,
     RegisterComponent,
+    UserRadioComponent,
   ],
   imports: [
     BrowserModule,
