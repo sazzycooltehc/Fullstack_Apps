@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { RegisterComponent } from './register/register.component';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { FooterComponent } from './shared/footer/footer.component';
     UserListComponent,
     UserFormComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    RegisterComponent,
+    UserRegistrationComponent
   ],
   imports: [
     BrowserModule,
