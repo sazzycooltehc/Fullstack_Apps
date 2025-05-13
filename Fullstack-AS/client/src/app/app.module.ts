@@ -10,8 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { RegisterComponent } from './register/register.component';
-import { UserRegistrationComponent } from './user-registration/user-registration.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +18,6 @@ import { UserRegistrationComponent } from './user-registration/user-registration
     HeaderComponent,
     FooterComponent,
     RegisterComponent,
-    UserRegistrationComponent
   ],
   imports: [
     BrowserModule,
