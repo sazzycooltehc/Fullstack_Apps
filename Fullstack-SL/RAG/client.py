@@ -6,6 +6,7 @@ import time
 import streamlit as st
 from streamlit_chat import message
 from server import ChatPDF
+from streamlit_router import StreamlitRouter
 
 st.set_page_config(page_title="RAG")
 st.title("RAG with Langchain and Streamlit")
