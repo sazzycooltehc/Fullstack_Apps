@@ -34,7 +34,7 @@ const App = () => {
       <ul>
         {todos.map(todo => (
           <li key={todo._id}>{todo.task}
-          <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+          <button onClick={() => deleteTodo(todo._id)}>Delete Todo</button>
           </li>
         ))}
       </ul>
