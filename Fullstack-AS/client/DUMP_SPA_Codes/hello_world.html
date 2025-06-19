@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World Vanilla JS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            margin: 0;
+            background-color: #f0f0f0; 
+            color: #333; 
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em; 
+            margin-bottom: 20px;
+            color: #2c3e50; /* Dark blue-gray */
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db; /* Blue button */
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome!</h1>
+        <button id="showAlertButton">Click Me</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const showAlertButton = document.getElementById('showAlertButton');
+
+            if (showAlertButton) {
+                showAlertButton.addEventListener('click', () => {
+                    alert('Hello World!');
+                });
+            } else {
+                console.error("Button with ID 'showAlertButton' not found.");
+            }
+        });
+    </script>
+</body>
+</html>
