@@ -1,11 +1,16 @@
-import Footer from "@/components/footer/footer";
 import HomeComp from "@/components/home/home";
+import IncidentWrapper from "./data/wrapper";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <HomeComp/>
-      <Footer/>
+    <div className="font-sans flex flex-col min-h-screen">
+      {/* <Header /> */}
+
+      <main className="flex-grow flex items-center justify-center min-h-screen p-8 gap-12 sm:p-8">
+        <IncidentWrapper />
+      </main>
+
+      {/* <Footer /> */}
     </div>
   );
 }

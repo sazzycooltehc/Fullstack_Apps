@@ -1,0 +1,17 @@
+/* incident_result.scss */
+.result-container {
+    min-height: 100vh;
+    background: linear-gradient(to right, #e0f7fa, #ede7f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .result-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  

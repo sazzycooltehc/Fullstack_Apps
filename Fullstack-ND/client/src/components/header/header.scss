@@ -1,0 +1,20 @@
+.Header {
+    // Base styles (if any) here
+  
+    // Portrait-specific styles
+    @media (orientation: portrait) {
+      background-color: #fefefe;
+      h1 {
+        font-size: 1.25rem;
+      }
+    }
+  
+    // Landscape-specific styles
+    @media (orientation: landscape) {
+      background-color: #f0f0f0;
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
