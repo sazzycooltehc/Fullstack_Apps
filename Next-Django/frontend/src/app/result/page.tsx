@@ -1,24 +1,53 @@
 "use client";
 
-import { Component, ReactNode, useLayoutEffect } from "react";
-import "./page.scss";
-import { isAuthenticated } from "@/utils/auth";
-import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getResultData } from "@/utils/resultStore";
 
-class IncidentResults extends Component {
-  render(): ReactNode {
-    // useLayoutEffect(() => {
-    //   const isAuth = isAuthenticated;
-    //   if(!isAuth){
-    //     redirect("/")
-    //   }
-    // }, [])
-    return (
-      <div className="result-container">
-        <div className="result-box">Form Submitted Successfully!</div>
-      </div>
-    );
+function IncidentResults() {
+  const [data, setData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const result = getResultData();
+    if (Array.isArray(result)) {
+      setData(result);
+    }
+  }, []);
+
+  if (data.length === 0) {
+    return <div className="p-4 text-gray-600">No data available. Please submit the form first.</div>;
   }
+
+  const headers = Object.keys(data[0]);
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Submitted Issues</h1>
+      <div className="overflow-auto rounded-2xl shadow-md bg-white">
+        <table className="min-w-full border border-gray-300 text-sm bg-white">
+          <thead className="bg-gray-200">
+            <tr>
+              {headers.map((header) => (
+                <th key={header} className="border px-4 py-3 text-left font-semibold text-gray-700">
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, i) => (
+              <tr key={i} className="hover:bg-gray-50">
+                {headers.map((h) => (
+                  <td key={h} className="border px-4 py-2 text-gray-800">
+                    {row[h]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 }
 
 export default IncidentResults;

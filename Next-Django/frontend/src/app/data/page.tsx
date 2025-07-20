@@ -5,6 +5,7 @@ import "./page.scss";
 import { NextRouter } from "next/router";
 import { incidentRouter } from "@/utils/incidentrouter";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { setResultData } from "@/utils/resultStore";
 
 type Props = {
     router: AppRouterInstance;
@@ -69,11 +70,40 @@ class IncidentData extends Component<Props, State> {
         );
     };
 
-    handleSubmit = (e: React.FormEvent) => {
+    handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (this.isValid()) {
-            document.cookie = "form_submitted=true; path=/";
-            this.props.router.push("/result");
+
+        const { incident, model, threshold, qualityScore } = this.state;
+
+        if (!this.isValid()) return;
+
+        try {
+            const res = await fetch("http://localhost:8000/api/submit/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include", // if using session authentication
+                body: JSON.stringify({
+                    incident,
+                    model,
+                    threshold: parseFloat(threshold),
+                    qualityScore: parseFloat(qualityScore),
+                }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                document.cookie = "form_submitted=true; path=/";
+                setResultData(data); 
+                this.props.router.push(`/result`);
+            } else {
+                alert(data.error || "Submission failed");
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("Network error");
         }
     };
 

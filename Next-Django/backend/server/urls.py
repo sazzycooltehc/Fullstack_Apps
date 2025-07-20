@@ -17,6 +17,7 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 
+from incident.views import submit_incident
 from quickstart import views
 from quickstart.views import login_view
 
@@ -30,4 +31,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/login/', login_view, name='api-login'),
+    path('api/submit/', submit_incident),
 ]
