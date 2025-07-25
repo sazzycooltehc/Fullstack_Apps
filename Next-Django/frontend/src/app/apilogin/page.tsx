@@ -1,6 +1,7 @@
 // pages/login.tsx
 'use client';
 
+import { environments } from '@/utils/environments';
 import { useState } from 'react';
 
 export default function Login() {
@@ -8,7 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    const res = await fetch('http://localhost:8000/api/login/', {
+    const res = await fetch( environments.development.apiUrl, {
       method: 'POST',
       credentials: 'include',  // Important for cookies
       headers: {
