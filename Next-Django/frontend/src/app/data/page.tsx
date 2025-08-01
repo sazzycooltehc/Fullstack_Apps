@@ -96,7 +96,7 @@ class IncidentData extends Component<Props, State> {
 
             if (res.ok) {
                 document.cookie = "form_submitted=true; path=/";
-                setResultData(data); 
+                setResultData(data);
                 this.props.router.push(`/result`);
             } else {
                 alert(data.error || "Submission failed");
@@ -111,8 +111,10 @@ class IncidentData extends Component<Props, State> {
         const { incident, model, threshold, qualityScore, models, touched } = this.state;
 
         return (
-            <main className="flex-grow flex items-center justify-center min-h-screen p-8 gap-12 sm:p-8">
+            <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
                 <form className="userForm p-4 border rounded-md w-full max-w-md" onSubmit={this.handleSubmit}>
+                    <h2 className="text-2xl font-bold text-center text-blue-700 mb-6">Incident Details</h2>
+
                     <div className="mb-4">
                         <label className="block mb-1">Incident</label>
                         <input
