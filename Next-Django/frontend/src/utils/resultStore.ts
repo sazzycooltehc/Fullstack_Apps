@@ -1,9 +1,20 @@
-let resultData: any = null;
+export interface IncidentData {
+  issue_id: string;
+  desc: string;
+  "Issue Description": string;
+  "Issue Category": string;
+  "Issue Subcategory": string;
+  "Root Cause Analysis": string;
+  "Resolution": string;
+  "Resolved By": string;
+}
 
-export const setResultData = (data: any) => {
+let resultData: IncidentData[] | null = null;
+
+export const setResultData = (data: IncidentData[]) => {
   resultData = data;
 };
 
-export const getResultData = () => {
+export const getResultData = (): IncidentData[] | null => {
   return resultData;
 };

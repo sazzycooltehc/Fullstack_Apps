@@ -2,7 +2,6 @@
 
 import React, { Component, ReactNode } from "react";
 import "./page.scss";
-import { NextRouter } from "next/router";
 import { incidentRouter } from "@/utils/incidentrouter";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { setResultData } from "@/utils/resultStore";

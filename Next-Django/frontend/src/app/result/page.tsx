@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getResultData } from "@/utils/resultStore";
+import { getResultData, IncidentData } from "@/utils/resultStore";
 
 function IncidentResults() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<IncidentData[]>([]);
 
   useEffect(() => {
     const result = getResultData();
@@ -38,7 +38,7 @@ function IncidentResults() {
               <tr key={i} className="hover:bg-gray-50">
                 {headers.map((h) => (
                   <td key={h} className="border px-4 py-2 text-gray-800">
-                    {row[h]}
+                    {row[h as keyof IncidentData]}
                   </td>
                 ))}
               </tr>
