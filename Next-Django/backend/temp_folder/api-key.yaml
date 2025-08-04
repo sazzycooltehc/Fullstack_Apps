@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: Job Application Starter API
+  version: 1.0.0
+servers:
+  - url: https://us-central1-qwiklabs-gcp-03-fc4f3f0abd1a.cloudfunctions.net/create-applicant
+paths:
+  /create_applicant:
+    post:
+      summary: Begin a new job application for an applicant.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Applicant"
+  responses:
+    "200":
+      description: Application started successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Application started successfully"
+            applicant_id:
+              type: string
+              example: "12345"
+    "400":
+      description: Invalid Input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid Email Format"
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal Server Error"
+  components:
+    schemas:
+      Applicant:
+        type: object
+        required:
+          - name
+          - email
+          - job_title_of_interest
+        properties:
+          name:
+            type: string
+            description: Full name of the applicant
+            example: "John Doe"
+          email:
+            type: string
+            format: email
+            description: Email address of the applicant
+            example: "john.doe@example.com"
+          url:
+            type: string
+            format: uri
+            description: Optional profile URL (applicant's portfolio or LinkedIn profile)
+            example: "https://linkedin.com/in/johndoe"
+          job_title_of_interest:
+            type: string
+            description: The job title applicant interested in
+            example: "Software Engineer"
+            
