@@ -35,7 +35,7 @@ if user_prompt := st.chat_input("What would you like to ask?"):
     # adds user's prompt to session state
     st.session_state.messages.append({"role": "user", "content": user_prompt})
 
-    with st.spinner('Generating response...'):
+    with st.spinner('Generating response Please wait...'):
         # retrieves response from model
         llm_stream = chat(user_prompt, model=model)
 
