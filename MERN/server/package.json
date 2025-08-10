@@ -15,6 +15,12 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mongodb": "^6.16.0",
-    "mongoose": "^8.14.1"
+    "mongoose": "^8.14.1",
+    "webpack": "^5.88.1",
+    "webpack-dev-middleware": "^5.3.4",
+    "webpack-hot-middleware": "^2.25.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^6.0.1"
   }
 }
