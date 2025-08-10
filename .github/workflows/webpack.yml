@@ -25,5 +25,5 @@ jobs:
     - name: Build
       run: |
         npm install
-        npm run build
+        webpack --config webpack.config.js
       working-directory: 'MERN/server' # 👈 Add this line
