@@ -1,0 +1,22 @@
+id-validation-app/
+│
+├── backend/                             # Flask API
+│   ├── __init__.py
+│   ├── backend.py                       # Main Flask app
+│   ├── requirements.txt                 # Backend dependencies
+│   ├── ocr_service.py                    # OCR + validation logic
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── preprocess.py                # Image preprocessing helpers
+│   │   └── validators.py                # Regex / format validators
+│   └── models/
+│       └── __init__.py                   # (Optional) Trained ML models
+│
+├── frontend/                            # Streamlit app
+│   ├── streamlit_app.py                 # Streamlit UI
+│   ├── requirements.txt                 # Frontend dependencies
+│   └── assets/                          # Images, CSS, etc.
+│
+├── docker-compose.yml                   # Optional: Run both via Docker
+├── README.md                            # Project instructions
+└── .gitignore
