@@ -1,5 +1,6 @@
 flask
+pdf2image
 pillow
-easyocr
 opencv-python
 numpy
+easyocr
