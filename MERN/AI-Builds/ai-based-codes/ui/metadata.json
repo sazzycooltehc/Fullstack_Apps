@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Content Explorer",
+  "description": "An interactive web application that allows users to explore categorized articles. Features a login system, a dynamic sidebar for navigation, and cascading dropdowns to filter and display content cards.",
+  "requestFramePermissions": []
+}
