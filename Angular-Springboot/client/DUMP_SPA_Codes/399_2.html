@@ -1,0 +1,115 @@
+<div class="disable-text-selection" role="presentation"><h2 class="question-title">Python Qualis - Pytest 2</h2><div class="content"><p><strong>Python Qualis - Pytest</strong></p>
+
+    <p>&nbsp;</p>
+    
+    <p>Installation:</p>
+    
+    <p>&nbsp;</p>
+    
+    <ul>
+        <li>&nbsp;Run&nbsp;the&nbsp;command&nbsp;given&nbsp;below&nbsp;in&nbsp;the&nbsp;terminal&nbsp;to&nbsp;install&nbsp;the&nbsp;required&nbsp;packages.</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`pip3&nbsp;install&nbsp;pytest&nbsp;test_pytest-0.1-py3-none-any.whl`</p>
+    
+    <p>&nbsp;</p>
+    
+    <p>Question:</p>
+    
+    <p>&nbsp;</p>
+    
+    <ul>
+        <li>Note:</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;directory&nbsp;files&nbsp;contains&nbsp;file_sum1.txt,file_sum2.txt&nbsp;...&nbsp;file_sum10.txt</p>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;These&nbsp;text&nbsp;files&nbsp;contain&nbsp;strings&nbsp;separated&nbsp;by&nbsp;new&nbsp;line&nbsp;</p>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;first&nbsp;line&nbsp;consists&nbsp;of&nbsp;a&nbsp;string&nbsp;which&nbsp;is&nbsp;the&nbsp;actual&nbsp;text</p>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;And&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;lines&nbsp;contains&nbsp;the&nbsp;hexadecimal&nbsp;value&nbsp;</p>
+    
+    <p>&nbsp;</p>
+    
+    <ul>
+        <li>&nbsp;Define&nbsp;a&nbsp;pytest&nbsp;fixture&nbsp;'check_hex'&nbsp;which&nbsp;takes&nbsp;a&nbsp;file&nbsp;name&nbsp;as&nbsp;a&nbsp;parameter&nbsp;and&nbsp;does&nbsp;the&nbsp;following:</li>
+    </ul>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read&nbsp;the&nbsp;file&nbsp;provided&nbsp;in&nbsp;the&nbsp;filename&nbsp;and&nbsp;return&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;file.</p>
+    
+    <p>&nbsp;</p>
+    
+    <ul>
+        <li>&nbsp;Define&nbsp;a&nbsp;function&nbsp;called&nbsp;encoder&nbsp;which&nbsp;can&nbsp;take&nbsp;a&nbsp;string&nbsp;value&nbsp;as&nbsp;a&nbsp;parameter&nbsp;and&nbsp;return&nbsp;the&nbsp;encoded&nbsp;hexadecimal&nbsp;value&nbsp;as&nbsp;a&nbsp;list</li>
+    </ul>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;the&nbsp;length&nbsp;of&nbsp;the&nbsp;string&nbsp;is&nbsp;not&nbsp;an&nbsp;even&nbsp;number&nbsp;then&nbsp;raise&nbsp;a&nbsp;value&nbsp;error&nbsp;of&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"not&nbsp;an&nbsp;even&nbsp;number&nbsp;of&nbsp;strings"</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;else&nbsp;perform&nbsp;the&nbsp;encoding&nbsp;in&nbsp;the&nbsp;following&nbsp;manner&nbsp;:</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;for&nbsp;every&nbsp;two&nbsp;letters&nbsp;perform&nbsp;encoding&nbsp;using&nbsp;this&nbsp;function "str".encode('utf-8').hex()</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;append&nbsp;them&nbsp;to&nbsp;a&nbsp;list</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;the&nbsp;list</p>
+    
+    <p>&nbsp;</p>
+    
+    <ul>
+        <li>&nbsp;Define&nbsp;a&nbsp;function&nbsp;called&nbsp;decoder&nbsp;which&nbsp;can&nbsp;take&nbsp;a&nbsp;list&nbsp;of&nbsp;hexadecimal values and&nbsp;perform&nbsp;decoding&nbsp;using&nbsp;the&nbsp;function&nbsp;bytes.fromhex("str").decode('utf-8')</li>
+    </ul>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;a&nbsp;hexadecimal value&nbsp;is&nbsp;not&nbsp;being&nbsp;able&nbsp;to&nbsp;decode,&nbsp;raise&nbsp;the&nbsp;ValueError&nbsp;with&nbsp;the&nbsp;following&nbsp;text&nbsp;"non-hexadecimal&nbsp;number&nbsp;found"</p>
+    
+    <p>&nbsp;</p>
+    
+    <ul>
+        <li>&nbsp;Define&nbsp;a&nbsp;test&nbsp;function&nbsp;called&nbsp;test1&nbsp;which&nbsp;can&nbsp;do&nbsp;the&nbsp;following</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pass&nbsp;the&nbsp;filename&nbsp;from&nbsp;file_sum1.txt,file_sum2.txt...file_sum5.txt&nbsp;using&nbsp;the&nbsp;pytest&nbsp;parameterize&nbsp;,&nbsp;and&nbsp;decode&nbsp;the&nbsp;hexadecimal&nbsp;values&nbsp;present&nbsp;in&nbsp;the&nbsp;file&nbsp;using&nbsp;decoder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;function&nbsp;and&nbsp;compare&nbsp;them&nbsp;with&nbsp;the&nbsp;actual&nbsp;text&nbsp;present&nbsp;in&nbsp;the&nbsp;file.</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    
+    <ul>
+        <li>&nbsp;Define&nbsp;a&nbsp;test&nbsp;function&nbsp;called&nbsp;test2&nbsp;which&nbsp;can&nbsp;do&nbsp;the&nbsp;following</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pass&nbsp;the&nbsp;filename&nbsp;from&nbsp;file_sum6.txt,file_sum7.txt...file_sum10.txt&nbsp;using&nbsp;the&nbsp;pytest&nbsp;parameterize&nbsp;,&nbsp;and&nbsp;encode&nbsp;the&nbsp;actual&nbsp;text&nbsp;string&nbsp;present&nbsp;in&nbsp;the&nbsp;file&nbsp;using&nbsp;encoder&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;and&nbsp;compare&nbsp;them&nbsp;with&nbsp;the&nbsp;hexadecimal&nbsp;values&nbsp;present&nbsp;in&nbsp;the&nbsp;file.</p>
+    
+    <p><br>
+    &nbsp;</p>
+    
+    <p>Testing:</p>
+    
+    <p>&nbsp;</p>
+    
+    <ul>
+        <li>&nbsp;You&nbsp;can&nbsp;test&nbsp;your&nbsp;solution&nbsp;using&nbsp;the&nbsp;below&nbsp;command&nbsp;in&nbsp;the&nbsp;terminal</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`python3&nbsp;run_test.py`</p>
+    
+    <p>&nbsp;</p>
+    </div></div>

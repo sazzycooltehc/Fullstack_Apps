@@ -1,0 +1,18 @@
+<div class="cron-evaluator">
+  <div class="cron-evaluator-container">
+    <label for="cronInput">Cron Expression</label>
+    <input id="cronInput" type="text" [(ngModel)]="cronExpression" (ngModelChange)="onCronChange($event)" placeholder="e.g., 0 */5 * * * *" />
+  </div>
+    <div class="parsed-fields">
+      <h4 class="flex-center">Parsed Fields</h4>
+      <div class="cron-field-container flex flex-col">
+        <div class="cron-field"><strong>Seconds:</strong> {{ cronFields.seconds }} <span *ngIf="activeFields.seconds">(active)</span></div>
+        <div class="cron-field"><strong>Minutes:</strong> {{ cronFields.minutes }} <span *ngIf="activeFields.minutes">(active)</span></div>
+        <div class="cron-field"><strong>Hours:</strong> {{ cronFields.hours }} <span *ngIf="activeFields.hours">(active)</span></div>
+        <div class="cron-field"><strong>Days:</strong> {{ cronFields.days }} <span *ngIf="activeFields.days">(active)</span></div>
+        <div class="cron-field"><strong>Month:</strong> {{ cronFields.month }} <span *ngIf="activeFields.month">(active)</span></div>
+        <div class="cron-field"><strong>Day of Week:</strong> {{ cronFields.dayOfWeek }} <span *ngIf="activeFields.dayOfWeek">(active)</span></div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,44 @@
+<mat-card class="recurrence-card">
+  <div class="recurrence-form flex flex-col">
+    <div class="form-field">
+      <label for="recurrencePattern">Recurrence Pattern</label>
+      <select [(ngModel)]="pattern" (change)="onPatternChange($any($event.target).value)">
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+    </div>
+
+    <div class="time-field">
+      <label for="timeInput">Time</label>
+      <input type="time" [(ngModel)]="time" hourFormat="12" (change)="onTimeChange($any($event.target).value)" />
+      <!-- <input
+      (change)="onTimeChange($any($event.target).value)"
+      type="text"
+      [(ngModel)]="formattedTime"
+      (blur)="onTimeBlur(); generateDescription()"
+      placeholder="hh:mm am/pm"
+      /> -->
+    </div>
+
+    <div class="form-field" *ngIf="pattern === 'weekly'">
+      <label for="daysOfWeek">Days of Week</label>
+      <div *ngFor="let day of weekdays">
+        <input type="checkbox" [id]="day" [checked]="selectedDays[day]" (change)="toggleDay(day)" />
+        <label [for]="day">{{ day | titlecase }}</label>
+      </div>
+    </div>
+
+    <div class="form-field" *ngIf="pattern === 'monthly'">
+      <label for="dayOfMonth">Day of Month</label>
+      <select [(ngModel)]="date" (change)="onDateChange($any($event.target).value)">
+        <option *ngFor="let d of [].constructor(31); let i = index" [value]="i+1">{{ i+1 }}</option>
+      </select>
+    </div>
+
+    <div class="description">
+      <h4>Generated Description:</h4>
+      <p>{{ description }}</p>
+    </div>
+  </div>
+</mat-card>
