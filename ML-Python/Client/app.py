@@ -5,7 +5,7 @@ import base64
 import io
 
 st.set_page_config(page_title="ID Card Validator", page_icon="🪪")
-st.title("🪪 ID Card Validation Tool (OpenCV + EasyOCR)")
+st.title("🪪 ID Card Validation Tool (OpenCV + EasyOCR + Dataset)")
 
 uploaded_file = st.file_uploader(
     "Upload your ID card (image or PDF)",
@@ -35,31 +35,16 @@ if uploaded_file:
             else:
                 data = resp.json()
 
-                # Single image response
-                if "valid" in data:
-                    st.subheader("Result")
-                    st.success("✅ ID looks valid!") if data["valid"] else st.error("❌ Could not validate ID.")
-                    st.write("**Extracted Details**")
-                    st.json(data.get("details", {}))
-
-                    if "annotated_image" in data:
-                        _show_annotated(data["annotated_image"], "OCR Bounding Boxes")
-
-                # PDF response (per page)
-                elif "pages" in data:
-                    st.subheader("PDF Pages")
-                    pages = data["pages"]
-                    # pages is a dict: { "1": {valid, details, annotated_image}, ... }
-                    for pg, result in pages.items():
+                if "pages" in data:  # handle both single image and PDFs the same way
+                    st.subheader("Result(s)")
+                    for pg, result in data["pages"].items():
                         st.markdown(f"### 📄 Page {pg}")
-                        st.success("✅ Valid") if result.get("valid") else st.warning("⚠️ Not fully recognized")
-                        st.write("**Extracted Details**")
-                        st.json(result.get("details", {}))
-                        if "annotated_image" in result:
-                            _show_annotated(result["annotated_image"], f"OCR Boxes (Page {pg})")
-
-                else:
-                    st.warning("Unexpected response format from backend.")
+                        st.write("**Raw Text:**")
+                        st.text(result.get("raw_text", ""))
+                        st.write("**Best Match (Person_ID):**")
+                        st.text(result.get("best_match", "None"))
+                        st.write("**Similarity Score:**")
+                        st.text(result.get("similarity", "0"))
 
         except Exception as e:
             st.error(f"Error: {e}")

@@ -1,6 +1,6 @@
 import os
 import argparse
-from midv500.utils import download, unzip
+from midv500.utils import download, unzip, create_dir
 
 midv500_links = [
     "ftp://smartengines.com/midv-500/dataset/01_alb_id.zip",
@@ -54,7 +54,6 @@ midv500_links = [
     "ftp://smartengines.com/midv-500/dataset/49_usa_ssn82.zip",
     "ftp://smartengines.com/midv-500/dataset/50_xpo_id.zip",
 ]
-
 
 midv2019_links = [
     "ftp://smartengines.com/midv-500/extra/midv-2019/dataset/01_alb_id.zip",
@@ -112,61 +111,64 @@ midv2019_links = [
 
 def download_dataset(download_dir: str, dataset_name: str = "midv500"):
     """
-    This script downloads the MIDV-500 dataset with extra files and unzips the folders.
-    dataset_name: str
-        "midv500": https://doi.org/10.18287/2412-6179-2019-43-5-818-824
-        "midv2019": https://doi.org/10.1117/12.2558438
-        "all": midv500 + midv2019
+    Download and extract MIDV datasets.
+
+    Args:
+        download_dir (str): Directory where datasets will be saved.
+        dataset_name (str): One of {"midv500", "midv2019", "all"}.
     """
+    datasets = {
+        "midv500": midv500_links,
+        "midv2019": midv2019_links,
+    }
 
-    if dataset_name == "midv500":
-        links_set = {
-            "midv500": midv500_links,
-        }
-    elif dataset_name == "midv2019":
-        links_set = {
-            "midv2019": midv2019_links,
-        }
-    elif dataset_name == "all":
-        links_set = {
-            "midv500": midv500_links,
-            "midv2019": midv2019_links,
-        }
+    # Validate input
+    if dataset_name not in {"midv500", "midv2019", "all"}:
+        raise ValueError('Invalid dataset_name, must be "midv500", "midv2019", or "all".')
+
+    # Select datasets
+    if dataset_name == "all":
+        links_set = datasets
     else:
-        Exception('Invalid dataset_name, try one of "midv500", "midv2019" or "all".')
+        links_set = {dataset_name: datasets[dataset_name]}
 
-    for k, v in links_set.items():
-        dst = os.path.join(download_dir, k)
-        for link in v:
+    # Create base download dir
+    create_dir(download_dir)
+
+    for ds_name, links in links_set.items():
+        dst = os.path.join(download_dir, ds_name)
+        create_dir(dst)
+
+        for link in links:
+            link = link.replace("\\", "/")  # normalize for Windows
+            filename = os.path.basename(link)
+
             print("--------------------------------------------------------------")
-            # download zip file
-            link = link.replace("\\", "/")  # for windows
-            filename = link.split("/")[-1]
-            print("\nDownloading:", filename)
-            download(link, dst)
-            print("Downloaded:", filename)
+            print(f"⬇️  Downloading {filename} ...")
+            zip_path = download(link, dst)
 
-            # unzip zip file
-            print("Unzipping:", filename)
-            zip_path = os.path.join(dst, filename)
+            print(f"📦 Unzipping {filename} ...")
             unzip(zip_path, dst)
-            print("Unzipped:", filename.replace(".zip", ""))
 
-            # remove zip file
+            print(f"🗑️ Removing archive {filename} ...")
             os.remove(zip_path)
+
+        print(f"✅ {ds_name} dataset ready at {dst}")
 
 
 if __name__ == "__main__":
-    # construct the argument parser
-    ap = argparse.ArgumentParser()
-
-    # add the arguments to the parser
-    ap.add_argument(
+    parser = argparse.ArgumentParser(description="Download MIDV datasets.")
+    parser.add_argument(
         "download_dir",
         default="data/",
-        help="Directory for MIDV-500 dataset to be downloaded.",
+        help="Directory for the dataset to be downloaded."
     )
-    args = vars(ap.parse_args())
+    parser.add_argument(
+        "--dataset",
+        choices=["midv500", "midv2019", "all"],
+        default="midv500",
+        help="Which dataset to download (default: midv500)."
+    )
+    args = parser.parse_args()
 
-    # download dataset
-    download_dataset(args["download_dir"])
+    download_dataset(args.download_dir, args.dataset)

@@ -3,22 +3,26 @@ import cv2
 import numpy as np
 import io
 
-def preprocess_image(img_bytes):
-    """Preprocess image for better OCR results and return as NumPy array."""
+def preprocess_image(img_bytes, return_bytes=False):
+    """Preprocess image for better OCR results and return NumPy array or bytes."""
     # 1. Open image
     img = Image.open(io.BytesIO(img_bytes))
 
-    # 2. Convert to grayscale
+    # 2. Handle transparency
+    if img.mode in ("RGBA", "LA"):
+        img = img.convert("RGB")
+
+    # 3. Convert to grayscale
     img = ImageOps.grayscale(img)
 
-    # 3. Enhance contrast
+    # 4. Enhance contrast
     enhancer = ImageEnhance.Contrast(img)
-    img = enhancer.enhance(2.0)  # Boost contrast
+    img = enhancer.enhance(2.0)
 
-    # 4. Convert to NumPy array for OpenCV
+    # 5. Convert to NumPy array for OpenCV
     img_cv = np.array(img)
 
-    # 5. Apply adaptive thresholding (binarization)
+    # 6. Apply adaptive thresholding (binarization)
     img_cv = cv2.adaptiveThreshold(
         img_cv, 255,
         cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
@@ -26,14 +30,25 @@ def preprocess_image(img_bytes):
         31, 2
     )
 
-    # 6. Deskew (optional)
+    # 7. Deskew
     img_cv = deskew(img_cv)
 
-    return img_cv   # ✅ Return NumPy array, not bytes
+    # 8. Morphological cleanup (remove noise)
+    kernel = np.ones((1, 1), np.uint8)
+    img_cv = cv2.morphologyEx(img_cv, cv2.MORPH_OPEN, kernel)
+
+    # ✅ Return as array or bytes
+    if return_bytes:
+        is_success, buffer = cv2.imencode(".png", img_cv)
+        return io.BytesIO(buffer).getvalue()
+    return img_cv
 
 def deskew(image):
     """Deskew the image using OpenCV moments."""
     coords = np.column_stack(np.where(image > 0))
+    if coords.shape[0] == 0:
+        return image  # nothing to deskew
+
     angle = cv2.minAreaRect(coords)[-1]
     if angle < -45:
         angle = -(90 + angle)
