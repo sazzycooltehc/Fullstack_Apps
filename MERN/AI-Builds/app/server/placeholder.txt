@@ -1,0 +1,5 @@
+This directory is intended for your server-side code.
+
+You can build your backend here using Node.js with Express, Python with Flask/Django, Go, or any other server technology.
+
+This clear separation between client and server promotes a scalable and maintainable application architecture.
