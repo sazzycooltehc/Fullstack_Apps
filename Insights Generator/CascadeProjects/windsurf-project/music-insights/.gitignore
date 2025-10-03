@@ -1,0 +1,13 @@
+# Java / Maven
+backend/target/
+*.log
+
+# Python
+analytics/__pycache__/
+*.pyc
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
