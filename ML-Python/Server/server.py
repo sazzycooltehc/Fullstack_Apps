@@ -37,4 +37,4 @@ def validate():
 
 if __name__ == "__main__":
     # If you call from another machine, add host="0.0.0.0"
-    app.run(debug=True)
+    app.run()
