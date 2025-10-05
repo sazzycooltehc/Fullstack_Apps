@@ -1,0 +1,16 @@
+# Java / Maven
+backend/target/
+*.log
+backend/src/main/java/com/musicinsights/config/ApplicationConfig.java
+backend/src/main/resources/application.properties
+
+# Python
+analytics/__pycache__/
+*.pyc
+*.env
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

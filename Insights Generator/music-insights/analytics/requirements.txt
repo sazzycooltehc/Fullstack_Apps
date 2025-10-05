@@ -1,0 +1,14 @@
+anyio
+fastapi==0.104.1
+librosa==0.10.0
+numpy==1.24.3
+passlib[bcrypt]==1.7.4
+pydantic==2.5.2
+pyjwt[cryptography]==2.8.0
+python-dotenv==1.0.0
+python-jose[cryptography]==3.3.0
+python-magic==0.4.26
+python-multipart==0.0.6
+requests==2.31.0
+spotipy==2.22.1
+uvicorn==0.21.1

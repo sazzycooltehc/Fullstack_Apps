@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Insights</title>
+    <!-- Internal CSS - No Tailwind Dependency -->
+    <style>
+        /* Using a modern, clean font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --color-bg-dark: #111827;
+            --color-bg-medium: #1F2937;
+            --color-bg-light: #374151;
+            --color-bg-container: #1f2937;
+            --color-primary: #1DB954;
+            --color-primary-hover: #1ed760;
+            --color-secondary: #3b82f6;
+            --color-secondary-hover: #2563eb;
+            --color-danger: #dc2626;
+            --color-danger-hover: #b91c1c;
+            --color-text-light: #F9FAFB;
+            --color-text-medium: #D1D5DB;
+            --color-text-dark: #9CA3AF;
+            --color-border: #4B5563;
+        }
+
+        /* Base & Layout */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-light);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Login Container */
+        #loginContainer {
+            width: 100%;
+            max-width: 28rem; /* max-w-md */
+            margin: auto;
+            padding: 1rem;
+        }
+
+        .login-box {
+            background-color: var(--color-bg-medium);
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-box p {
+            color: var(--color-text-dark);
+            margin-bottom: 2rem;
+        }
+
+        .login-box form > div {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .divider {
+            position: relative;
+            display: flex;
+            padding: 2rem 0;
+            align-items: center;
+        }
+        .divider-line {
+            flex-grow: 1;
+            border-top: 1px solid var(--color-border);
+        }
+        .divider-text {
+            flex-shrink: 0;
+            margin: 0 1rem;
+            color: var(--color-text-dark);
+            font-size: 0.875rem;
+        }
+
+
+        /* Forms & Buttons */
+        .input-field {
+            background-color: var(--color-bg-light);
+            color: var(--color-text-light);
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            border: 2px solid transparent;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--color-primary);
+        }
+        
+        .btn {
+            font-weight: 700;
+            padding: 0.75rem 0;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+        }
+        
+        .btn-secondary {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: var(--color-secondary-hover);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .spotify-btn {
+            background-color: #1DB954;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem; /* Space between icon and text */
+        }
+        .spotify-btn:hover {
+            background-color: #1ed760;
+        }
+
+
+        /* Dashboard */
+        .dashboard {
+            width: 100%;
+            max-width: 56rem; /* max-w-4xl */
+            margin: auto;
+            padding: 1rem;
+        }
+
+        .dashboard header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+        
+        .dashboard header h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+
+        .logout-btn {
+            background-color: var(--color-danger);
+            color: white;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .logout-btn:hover {
+            background-color: var(--color-danger-hover);
+        }
+
+        /* Tabs */
+        .tabs {
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 1.5rem;
+        }
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            color: var(--color-text-dark);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .tab-btn.active {
+            border-bottom-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+        
+        #tabContentWrapper {
+             background-color: var(--color-bg-medium);
+             padding: 1.5rem;
+             border-radius: 0.75rem;
+             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+             min-height: 300px;
+        }
+
+        .upload-container {
+            text-align: center;
+            border: 2px dashed var(--color-border);
+            padding: 2.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .upload-container.highlight {
+            border-color: var(--color-primary) !important;
+            background-color: rgba(22, 163, 74, 0.1) !important;
+        }
+
+        .search-container, .url-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Insights & Results */
+        .insights-container {
+            margin-top: 1.5rem;
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            max-height: 20rem;
+            overflow-y: auto;
+        }
+        .results-item {
+             background-color: var(--color-bg-light);
+             padding: 0.75rem;
+             border-radius: 0.375rem;
+             margin-bottom: 0.5rem;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             transition: background-color 0.3s;
+        }
+         .results-item:hover {
+            background-color: #4B5563;
+         }
+
+        /* Animation keyframes */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        /* Responsive */
+        @media (min-width: 640px) {
+             .dashboard header {
+                flex-direction: row;
+             }
+             .logout-btn {
+                 width: auto;
+             }
+            .search-container, .url-container {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <!-- Login Container -->
+    <div id="loginContainer" class="w-full max-w-md mx-auto p-4">
+        <div class="login-box">
+            <h2>Welcome to Music Insights</h2>
+            <p>Login to analyze your favorite tracks</p>
+            <form id="loginForm">
+                <div class="flex flex-col gap-4">
+                    <input type="text" id="username" placeholder="Username" class="input-field" required>
+                    <input type="password" id="password" placeholder="Password" class="input-field" required>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p class="text-xs text-gray-500" style="color: var(--color-text-dark); font-size: 0.75rem; margin-top: 0.5rem;">Demo creds: user / user123</p>
+                </div>
+            </form>
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">OR</span>
+                <div class="divider-line"></div>
+            </div>
+            <!-- Spotify Login Button -->
+            <button id="spotifyLoginBtn" class="btn spotify-btn">
+                <svg class="w-6 h-6" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.19 14.39c-.24.36-.72.48-1.08.24-2.95-1.82-6.59-2.22-10.91-.98-.42.12-.84-.18-.96-.6s.18-.84.6-.96c4.68-1.32 8.75-.89 11.97 1.11.36.24.48.72.24 1.08.01.11 0 .11 0 0zm1.2-2.71c-.3.42-.87.54-1.29.24-3.24-1.99-8.15-2.58-11.85-1.42-.51.15-.99-.18-1.14-.69s.18-.99.69-1.14c4.13-1.26 9.51-.62 13.17 1.62.42.27.54.84.24 1.29s-.01 0 .01 0zm.09-2.82c-3.72-2.3-9.92-2.52-13.84-1.38-.51.15-1.11-.21-1.26-.72s.21-1.11.72-1.26c4.35-1.23 11.02-.97 15.17 1.58.48.3.63.93.33 1.41-.3.48-.93.63-1.41.33h-.01z"/></svg>
+                <span>Login with Spotify</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard" style="display: none;">
+        <header>
+            <h1>Music Insights Dashboard</h1>
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn" data-tab="upload">Upload</button>
+            <button class="tab-btn" data-tab="search">Search</button>
+            <button class="tab-btn" data-tab="url">URL</button>
+        </div>
+
+        <div id="tabContentWrapper">
+            <!-- Upload Tab -->
+            <div class="tab-content" id="uploadTab">
+                <div class="upload-container">
+                    <input type="file" id="fileInput" accept="audio/*" class="hidden">
+                    <button id="browseBtn" class="btn btn-primary" style="margin-bottom: 1rem; padding: 0.75rem 1.5rem; width: auto;">Browse Files</button>
+                    <p style="color: var(--color-text-dark);">or drag and drop files here</p>
+                    <div id="fileInfo" style="margin-top: 1rem; color: var(--color-primary); font-weight: 500;"></div>
+                    <button id="analyzeBtn" class="btn btn-secondary" style="margin-top: 1rem; padding: 0.75rem 1.5rem; width: auto;" disabled>Analyze</button>
+                </div>
+            </div>
+
+            <!-- Search Tab -->
+            <div class="tab-content hidden" id="searchTab">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Enter song name, e.g., Blinding Lights" class="input-field">
+                    <button id="searchBtn" class="btn btn-primary" style="padding: 0.75rem 1.5rem; width: auto; flex-shrink: 0;">Search</button>
+                </div>
+                <div id="searchResults" class="results"></div>
+            </div>
+
+            <!-- URL Tab -->
+            <div class="tab-content hidden" id="urlTab">
+                <div class="url-container">
+                    <input type="text" id="urlInput" placeholder="Paste music URL, e.g., Spotify, YouTube" class="input-field">
+                    <button id="fetchBtn" class="btn btn-primary" style="padding: 0.75rem 1.5rem; width: auto; flex-shrink: 0;">Fetch & Analyze</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Container -->
+        <div id="insights" class="insights-container">
+            <!-- Insights will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Embedded JavaScript -->
+    <script type="module">
+        // --- API SERVICE (from api.js) ---
+        class ApiService {
+            constructor() {
+                this.authBaseUrl = 'http://localhost:8084/api';
+                this.insightsBaseUrl = 'http://127.0.0.1:8000';
+                this.token = null;
+            }
+
+            setToken(token) {
+                this.token = token;
+            }
+
+            async request(baseUrl, endpoint, options = {}) {
+                const headers = {
+                    'Accept': 'application/json',
+                    ...options.headers,
+                };
+
+                if (this.token) {
+                    headers['Authorization'] = `Bearer ${this.token}`;
+                }
+                
+                if (options.body && !(options.body instanceof FormData)) {
+                    headers['Content-Type'] = options.headers?.['Content-Type'] || 'application/json';
+                }
+
+                try {
+                    const response = await fetch(`${baseUrl}${endpoint}`, {
+                        ...options,
+                        headers,
+                    });
+
+                    if (!response.ok) {
+                        let errorData;
+                        try {
+                            errorData = await response.json();
+                        } catch {
+                            throw new Error(`API request failed with status ${response.status}`);
+                        }
+                        throw new Error(errorData.message || errorData.detail || 'Something went wrong');
+                    }
+
+                    if (response.status === 204) {
+                        return null;
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error('API Error:', error);
+                    throw error;
+                }
+            }
+
+            // Auth endpoints
+            async login(credentials) {
+                return this.request(this.authBaseUrl, '/auth/login', {
+                    method: 'POST',
+                    body: JSON.stringify(credentials),
+                });
+            }
+
+            loginWithSpotify() {
+                window.location.href = `${this.authBaseUrl}/auth/spotify/login`;
+            }
+
+            // Music analysis endpoints
+            async uploadFile(file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                return this.request(this.insightsBaseUrl, '/analyze/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+            }
+
+            async searchSong(query) {
+                return this.request(this.insightsBaseUrl, `/analyze/search?q=${encodeURIComponent(query)}`);
+            }
+
+            async analyzeUrl(url) {
+                return this.request(this.insightsBaseUrl, `/analyze/url?url=${encodeURIComponent(url)}`);
+            }
+        }
+
+        const apiService = new ApiService();
+
+        // --- APPLICATION LOGIC (from app.js) ---
+        const loginContainer = document.getElementById('loginContainer');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const spotifyLoginBtn = document.getElementById('spotifyLoginBtn');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const fileInfo = document.getElementById('fileInfo');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResults = document.getElementById('searchResults');
+        const urlInput = document.getElementById('urlInput');
+        const fetchBtn = document.getElementById('fetchBtn');
+        const insightsContainer = document.getElementById('insights');
+        const uploadContainer = document.querySelector('.upload-container');
+
+        let currentFile = null;
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                apiService.setToken(token);
+                showDashboard();
+            }
+
+            if (loginForm) loginForm.addEventListener('submit', handleLogin);
+            
+            if (spotifyLoginBtn) {
+                spotifyLoginBtn.addEventListener('click', () => {
+                    const w = 520, h = 720;
+                    const left = window.screenX + Math.max(0, (window.outerWidth - w) / 2);
+                    const top = window.screenY + Math.max(0, (window.outerHeight - h) / 2);
+                    window.open(
+                        `${apiService.authBaseUrl}/auth/spotify/login`,
+                        'spotifyLogin',
+                        `width=${w},height=${h},left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no`
+                    );
+                });
+            }
+
+            window.addEventListener('message', (event) => {
+                const data = event.data;
+                if (data && data.type === 'APP_JWT' && data.token) {
+                    try {
+                        localStorage.setItem('authToken', data.token);
+                        apiService.setToken(data.token);
+                        showDashboard();
+                    } catch (e) {
+                        console.error('Failed to handle Spotify login token', e);
+                        alert('Login failed. Please try again.');
+                    }
+                }
+            });
+
+            if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+
+            tabButtons.forEach(button => button.addEventListener('click', () => switchTab(button.dataset.tab)));
+
+            if (browseBtn && fileInput) {
+                browseBtn.addEventListener('click', () => fileInput.click());
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) handleFileSelect(e.target.files[0]);
+                });
+            }
+             
+            if(uploadContainer) {
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    uploadContainer.addEventListener(eventName, preventDefaults, false);
+                });
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    uploadContainer.addEventListener(eventName, () => uploadContainer.classList.add('highlight'), false);
+                });
+                ['dragleave', 'drop'].forEach(eventName => {
+                    uploadContainer.addEventListener(eventName, () => uploadContainer.classList.remove('highlight'), false);
+                });
+                uploadContainer.addEventListener('drop', (e) => {
+                     if (e.dataTransfer.files.length > 0) handleFileSelect(e.dataTransfer.files[0]);
+                }, false);
+            }
+
+            if (analyzeBtn) analyzeBtn.addEventListener('click', handleFileUpload);
+
+            if (searchBtn && searchInput) {
+                searchBtn.addEventListener('click', handleSearch);
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') handleSearch();
+                });
+            }
+
+            if (fetchBtn && urlInput) {
+                fetchBtn.addEventListener('click', handleUrlFetch);
+                urlInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') handleUrlFetch();
+                });
+            }
+            
+            // Activate the first tab by default
+            switchTab('upload');
+        });
+
+        // --- Helper Functions ---
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        function handleFileSelect(file) {
+            currentFile = file;
+            fileInfo.textContent = `Selected: ${currentFile.name} (${formatFileSize(currentFile.size)})`;
+            analyzeBtn.disabled = false;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // --- Authentication Functions ---
+        async function handleLogin(e) {
+            e.preventDefault();
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+            if (!username || !password) {
+                alert('Please enter both username and password');
+                return;
+            }
+            try {
+                const resp = await apiService.login({ username, password });
+                const token = resp.token || resp.access_token;
+                if (!token) throw new Error('No token received');
+                localStorage.setItem('authToken', token);
+                apiService.setToken(token);
+                showDashboard();
+            } catch (error) {
+                console.error('Login failed:', error);
+                alert(`Login failed: ${error.message}`);
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('authToken');
+            apiService.setToken(null);
+            window.location.reload();
+        }
+
+        function showDashboard() {
+            loginContainer.style.display = 'none';
+            dashboard.style.display = 'block';
+        }
+
+        // --- Tab Functions ---
+        function switchTab(tabName) {
+            tabButtons.forEach(button => {
+                button.classList.toggle('active', button.dataset.tab === tabName);
+            });
+            tabContents.forEach(content => {
+                const isTargetTab = content.id === `${tabName}Tab`;
+                 if (isTargetTab) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+            insightsContainer.innerHTML = ''; // Clear previous results
+            searchResults.innerHTML = '';
+        }
+
+        // --- Analysis Functions ---
+        async function handleFileUpload() {
+            if (!currentFile) return;
+            try {
+                showLoading('Analyzing your music file...');
+                const data = await apiService.uploadFile(currentFile);
+                displayInsights(data);
+            } catch (error) {
+                console.error('Analysis failed:', error);
+                showError(`Analysis failed: ${error.message}`);
+            }
+        }
+
+        async function handleSearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+            try {
+                searchResults.innerHTML = '';
+                showLoading(`Searching for "${query}"...`);
+                const results = await apiService.searchSong(query);
+                insightsContainer.innerHTML = ''; // Clear loading
+                displaySearchResults(results);
+            } catch (error) {
+                console.error('Search failed:', error);
+                showError(`Search failed: ${error.message}`);
+            }
+        }
+
+        async function handleUrlFetch() {
+            const url = urlInput.value.trim();
+            if (!url) return;
+            try {
+                showLoading('Fetching music from URL...');
+                const data = await apiService.analyzeUrl(url);
+                displayInsights(data);
+            } catch (error) {
+                console.error('URL fetch failed:', error);
+                showError(`URL fetch failed: ${error.message}`);
+            }
+        }
+
+        // --- UI Update Functions ---
+        function displaySearchResults(results) {
+            searchResults.innerHTML = '';
+            if (!results || results.length === 0) {
+                searchResults.innerHTML = '<p style="text-align: center; color: var(--color-text-dark);">No results found. Try a different search term.</p>';
+                return;
+            }
+            results.forEach(insights => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'results-item';
+                resultItem.innerHTML = `
+                    <div>
+                        <p style="font-weight: 700;">${insights.title}</p>
+                        <p style="font-size: 0.875rem; color: var(--color-text-dark);">${insights.artist || 'Unknown Artist'} &bull; ${insights.album || 'Unknown Album'}</p>
+                    </div>
+                    <button class="btn btn-primary" style="font-size: 0.875rem; font-weight: 700; padding: 0.5rem 0.75rem; width: auto;">View Insights</button>
+                `;
+                resultItem.querySelector('button').addEventListener('click', () => {
+                    displayInsights(insights);
+                });
+                searchResults.appendChild(resultItem);
+            });
+        }
+
+        function displayInsights(raw) {
+            const data = {
+                title: raw.title || raw.name || 'Unknown',
+                artist: raw.artist || (raw.artists && raw.artists[0]) || 'Unknown Artist',
+                album: raw.album || raw.album_name || 'Unknown Album',
+                genre: raw.genre || raw.genres || [],
+                year: raw.year || raw.release_year || null,
+                duration: raw.duration || raw.duration_formatted || 'N/A',
+                popularity: raw.popularity,
+                audioFeatures: raw.audioFeatures || raw.audio_features || {},
+                similarTracks: raw.similarTracks || raw.similar_tracks || [],
+            };
+
+            const renderProgressBar = (label, value) => {
+                const percentage = Math.round((value || 0) * 100);
+                return `
+                    <div style="display: flex; align-items: center; gap: 1rem; font-size: 0.875rem;">
+                        <label style="width: 7rem; font-weight: 500; color: var(--color-text-medium);">${label}</label>
+                        <div style="flex-grow: 1; background-color: var(--color-bg-light); border-radius: 9999px; height: 0.5rem;"><div style="background-color: var(--color-primary); height: 0.5rem; border-radius: 9999px; width: ${percentage}%"></div></div>
+                        <span style="width: 2.5rem; text-align: right; color: var(--color-text-dark);">${percentage}%</span>
+                    </div>
+                `;
+            };
+
+            insightsContainer.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                    <!-- Left Column: Main Details & Audio Features -->
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;" class="lg-col-span-2">
+                        <div style="background-color: rgba(17, 24, 39, 0.5); padding: 1.5rem; border-radius: 0.5rem;" class="fade-in">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem;">${data.title}</h3>
+                            <p style="font-size: 1.125rem; color: var(--color-text-medium); margin-bottom: 1rem;">${data.artist}</p>
+                            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem 1rem; font-size: 0.875rem;">
+                                <p><strong>Album:</strong> ${data.album}</p>
+                                <p><strong>Year:</strong> ${data.year || 'N/A'}</p>
+                                <p><strong>Duration:</strong> ${data.duration}</p>
+                                <p><strong>Genre:</strong> ${Array.isArray(data.genre) ? data.genre.join(', ') : data.genre || 'N/A'}</p>
+                                <p><strong>Key:</strong> ${data.audioFeatures.key || 'N/A'} ${((data.audioFeatures.mode === 1) || (data.audioFeatures.mode === 'major')) ? 'Major' : 'Minor'}</p>
+                                <p><strong>Tempo:</strong> ${Math.round(data.audioFeatures.tempo || 0)} BPM</p>
+                            </div>
+                        </div>
+                        <div style="background-color: rgba(17, 24, 39, 0.5); padding: 1.5rem; border-radius: 0.5rem;" class="fade-in" style="animation-delay: 0.1s">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Audio Features</h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                ${renderProgressBar('Danceability', data.audioFeatures.danceability)}
+                                ${renderProgressBar('Energy', data.audioFeatures.energy)}
+                                ${renderProgressBar('Valence (Positivity)', data.audioFeatures.valence)}
+                                ${renderProgressBar('Acousticness', data.audioFeatures.acousticness)}
+                                ${renderProgressBar('Instrumentalness', data.audioFeatures.instrumentalness)}
+                                ${renderProgressBar('Liveness', data.audioFeatures.liveness)}
+                                ${renderProgressBar('Speechiness', data.audioFeatures.speechiness)}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Column: Similar Tracks -->
+                    <div style="background-color: rgba(17, 24, 39, 0.5); padding: 1.5rem; border-radius: 0.5rem;" class="fade-in" style="animation-delay: 0.2s">
+                        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Similar Tracks</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 24rem; overflow-y: auto;" class="no-scrollbar">
+                            ${!data.similarTracks || data.similarTracks.length === 0 
+                                ? '<p style="color: var(--color-text-dark);">No similar tracks found.</p>' 
+                                : data.similarTracks.map(track => `
+                                <div style="background-color: var(--color-bg-light); padding: 0.75rem; border-radius: 0.375rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <p style="font-weight: 600; font-size: 0.875rem;">${track.name || track.title}</p>
+                                            <p style="font-size: 0.75rem; color: var(--color-text-dark);">${track.artist || (track.artists && track.artists[0])}</p>
+                                        </div>
+                                        <span style="font-size: 0.875rem; font-weight: 700; color: var(--color-primary);">${Math.round((track.match || track.similarity || 0) * 100)}%</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            insightsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showLoading(message) {
+            insightsContainer.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; color: var(--color-text-dark);">
+                    <div style="width: 2rem; height: 2rem; border: 4px solid var(--color-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            insightsContainer.innerHTML = `
+                <div style="background-color: rgba(127, 29, 29, 0.5); border: 1px solid var(--color-danger); color: #FECACA; padding: 1rem; border-radius: 0.5rem; text-align: center;">
+                    <p>❌ ${message}</p>
+                </div>
+            `;
+        }
+        
+        // Responsive JS for grid
+        const resizeObserver = new ResizeObserver(entries => {
+          for (let entry of entries) {
+            const insightsGrid = entry.target.querySelector('.insights-container > div');
+            if (insightsGrid) {
+              if (entry.contentRect.width >= 1024) {
+                insightsGrid.style.gridTemplateColumns = 'repeat(3, minmax(0, 1fr))';
+                insightsGrid.querySelector('.lg-col-span-2').style.gridColumn = 'span 2 / span 2';
+              } else {
+                insightsGrid.style.gridTemplateColumns = '1fr';
+                insightsGrid.querySelector('.lg-col-span-2').style.gridColumn = 'auto';
+              }
+            }
+          }
+        });
+        resizeObserver.observe(dashboard);
+    </script>
+</body>
+</html>
+

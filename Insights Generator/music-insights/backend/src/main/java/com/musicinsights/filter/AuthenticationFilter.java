@@ -40,6 +40,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             "auth/login",
             "auth/register",
             "api-docs",
+            "auth/spotify/login",
+            "auth/spotify/callback",
             "swagger.json",
             "swagger.yaml"
     };

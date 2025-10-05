@@ -25,4 +25,10 @@ public interface AuthenticationService {
      * @throws SecurityException if the token is invalid
      */
     String validateToken(String token) throws SecurityException;
+
+    /**
+     * Issue a JWT for the specified username (without password verification).
+     * Intended for use after external OAuth (e.g., Spotify) has authenticated the user.
+     */
+    String issueToken(String username);
 }

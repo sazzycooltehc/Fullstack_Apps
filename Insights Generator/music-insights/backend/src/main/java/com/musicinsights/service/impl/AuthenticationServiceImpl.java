@@ -118,6 +118,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
     
+    @Override
+    public String issueToken(String username) {
+        // Issue a standard token for the given username without credential checks
+        return generateToken(username);
+    }
+
     private String generateToken(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + config.getJwtExpirationMs());
