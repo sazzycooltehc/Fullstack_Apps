@@ -1,4 +1,4 @@
-# Security Policy
+# Security Workflow Policy
 
 ## Supported Versions
 
